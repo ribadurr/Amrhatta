@@ -91,9 +91,9 @@
                     <p style="color:#cccccc; font-size:0.92rem; margin:0 0 0.5rem;">{{ $coach->bio }}</p>
                 @endif
                 @if($coach->experience_years)
-                    <p class="coach-experience" style="color:#999; margin:0;">Pengalaman: {{ $coach->experience_years }} tahun</p>
+                    <p class="coach-experience" style="color:#999; margin:0;">NIP: {{ $coach->experience_years }} tahun</p>
                 @elseif(!empty($coach->experience))
-                    <p class="coach-experience" style="color:#999; margin:0;">Pengalaman: {{ $coach->experience }}</p>
+                    <p class="coach-experience" style="color:#999; margin:0;">NIP: {{ $coach->experience }}</p>
                 @endif
             </div>
             @endforeach

@@ -26,9 +26,9 @@
             </div>
 
             <div class="form-group">
-                <label for="experience_years">Pengalaman (tahun)</label>
-                <input type="number" name="experience_years" id="experience_years" class="form-control @error('experience_years') is-invalid @enderror" value="{{ old('experience_years') }}">
-                @error('experience_years')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                <label for="nip">NIP (Nomor Induk Pegawai)</label>
+                <input type="number" name="nip" id="nip" class="form-control @error('nip') is-invalid @enderror" value="{{ old('nip') }}">
+                @error('nip')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
 
             <div class="form-group">

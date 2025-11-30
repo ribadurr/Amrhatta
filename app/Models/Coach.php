@@ -13,7 +13,7 @@ class Coach extends Model
         'name',
         'position',
         'experience',
-        'experience_years',
+        'nip',
         'bio',
         'photo'
     ];

@@ -23,7 +23,7 @@ class CoachController extends Controller
         $validated = $request->validate([
             'name' => 'required|max:255',
             'position' => 'nullable|max:255',
-            'experience_years' => 'nullable|integer',
+            'nip' => 'nullable|integer',
             'bio' => 'nullable|string',
             'photo' => 'nullable|image|max:2048'
         ]);
@@ -34,8 +34,8 @@ class CoachController extends Controller
         }
 
         // keep backward-compatible 'experience' field if present
-        if ($request->filled('experience_years')) {
-            $validated['experience'] = $request->input('experience_years');
+        if ($request->filled('nip')) {
+            $validated['experience'] = $request->input('nip');
         }
 
         Coach::create($validated);
@@ -59,7 +59,7 @@ class CoachController extends Controller
         $validated = $request->validate([
             'name' => 'required|max:255',
             'position' => 'nullable|max:255',
-            'experience_years' => 'nullable|integer',
+            'nip' => 'nullable|integer',
             'bio' => 'nullable|string',
             'photo' => 'nullable|image|max:2048'
         ]);
@@ -69,8 +69,8 @@ class CoachController extends Controller
             $validated['photo'] = $path;
         }
 
-        if ($request->filled('experience_years')) {
-            $validated['experience'] = $request->input('experience_years');
+        if ($request->filled('nip')) {
+            $validated['experience'] = $request->input('nip');
         }
 
         $coach->update($validated);

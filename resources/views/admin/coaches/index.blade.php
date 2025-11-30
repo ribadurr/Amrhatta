@@ -18,7 +18,7 @@
                     <th>#</th>
                     <th>Nama</th>
                     <th>Jabatan</th>
-                    <th>Pengalaman (tahun)</th>
+                    <th>NIP</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -28,7 +28,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $coach->name }}</td>
                     <td>{{ $coach->position }}</td>
-                    <td>{{ $coach->experience_years }}</td>
+                    <td>{{ $coach->nip }}</td>
                     <td class="action-buttons">
                         <a href="{{ route('admin.coaches.edit', $coach) }}" class="btn btn-warning btn-sm">✏️ Edit</a>
                         <form action="{{ route('admin.coaches.destroy', $coach) }}" method="POST" style="display:inline-block;">

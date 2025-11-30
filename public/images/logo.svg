@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="#000" stroke="#DAA520" stroke-width="3"/>
+  
+  <!-- Pramuka symbol (Fleur de lis / Scout emblem) -->
+  <g fill="#DAA520">
+    <!-- Main vertical stem -->
+    <path d="M 100 30 L 95 60 L 105 60 Z"/>
+    <rect x="97" y="60" width="6" height="60" fill="#DAA520"/>
+    
+    <!-- Left petal -->
+    <path d="M 60 80 Q 50 70 45 85 Q 50 95 60 90 Z"/>
+    <path d="M 60 90 Q 50 100 45 115 Q 50 125 60 120 Z"/>
+    
+    <!-- Right petal -->
+    <path d="M 140 80 Q 150 70 155 85 Q 150 95 140 90 Z"/>
+    <path d="M 140 90 Q 150 100 155 115 Q 150 125 140 120 Z"/>
+    
+    <!-- Center ornament -->
+    <circle cx="100" cy="100" r="8" fill="#DAA520"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="100" y="170" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#DAA520">PRAMUKA</text>
+</svg>

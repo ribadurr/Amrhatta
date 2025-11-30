@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Agenda;
 use App\Models\Member;
+use App\Models\Event;
+use App\Models\Coach;
+use App\Models\Achievement;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -15,7 +18,22 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // Middleware applied via routes
+    }
+
+    /**
+     * Display admin dashboard with statistics
+     */
+    public function dashboard(): View
+    {
+        $stats = [
+            'members' => Member::count(),
+            'coaches' => Coach::count(),
+            'achievements' => Achievement::count(),
+            'events' => Event::count(),
+        ];
+
+        return view('admin.dashboard', compact('stats'));
     }
 
     // ===== AGENDA METHODS =====

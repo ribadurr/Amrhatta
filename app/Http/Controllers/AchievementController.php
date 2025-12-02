@@ -30,7 +30,8 @@ class AchievementController extends Controller
             'title' => 'required|max:255',
             'category' => 'required',
             'description' => 'nullable|string',
-            'member_id' => 'nullable|exists:members,id',
+            'members' => 'nullable|array',
+            'members.*' => 'exists:members,id',
             'event_id' => 'nullable|exists:events,id',
             'image' => 'nullable|image|max:2048'
         ]);
@@ -40,7 +41,16 @@ class AchievementController extends Controller
             $validated['image'] = $path;
         }
 
-        Achievement::create($validated);
+        // Remove members from validated data since it's not a direct column
+        $members = $validated['members'] ?? [];
+        unset($validated['members']);
+
+        $achievement = Achievement::create($validated);
+        
+        // Attach members to the achievement
+        if (!empty($members)) {
+            $achievement->members()->attach($members);
+        }
 
         return redirect()->route('admin.achievements.index')
             ->with('success', 'Prestasi berhasil ditambahkan!');
@@ -65,7 +75,8 @@ class AchievementController extends Controller
             'title' => 'required|max:255',
             'category' => 'required',
             'description' => 'nullable|string',
-            'member_id' => 'nullable|exists:members,id',
+            'members' => 'nullable|array',
+            'members.*' => 'exists:members,id',
             'event_id' => 'nullable|exists:events,id',
             'image' => 'nullable|image|max:2048'
         ]);
@@ -75,7 +86,14 @@ class AchievementController extends Controller
             $validated['image'] = $path;
         }
 
+        // Remove members from validated data since it's not a direct column
+        $members = $validated['members'] ?? [];
+        unset($validated['members']);
+
         $achievement->update($validated);
+        
+        // Sync members to the achievement (replaces old members)
+        $achievement->members()->sync($members);
 
         return redirect()->route('admin.achievements.index')
             ->with('success', 'Prestasi berhasil diupdate!');

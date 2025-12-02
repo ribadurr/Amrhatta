@@ -15,13 +15,12 @@ class Achievement extends Model
         'category',
         'description',
         'image',
-        'member_id',
         'event_id'
     ];
 
-    public function member()
+    public function members()
     {
-        return $this->belongsTo(\App\Models\Member::class);
+        return $this->belongsToMany(\App\Models\Member::class);
     }
 
     public function event()

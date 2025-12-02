@@ -35,7 +35,15 @@
                     <td>{{ $achievement->year }}</td>
                     <td>{{ $achievement->title }}</td>
                     <td>{{ $achievement->category }}</td>
-                    <td>{{ optional($achievement->member)->full_name ?? '-' }}</td>
+                    <td>
+                        @if($achievement->members->count() > 0)
+                            @foreach($achievement->members as $member)
+                                <div>{{ $member->full_name }}</div>
+                            @endforeach
+                        @else
+                            <span style="color:#999;">-</span>
+                        @endif
+                    </td>
                     <td>{{ optional($achievement->event)->title ?? '-' }}</td>
                     <td class="action-buttons">
                         <a href="{{ route('admin.achievements.edit', $achievement) }}" class="btn btn-warning btn-sm">✏️ Edit</a>

@@ -24,7 +24,7 @@ class Member extends Model
 
     public function achievements()
     {
-        return $this->hasMany(\App\Models\Achievement::class);
+        return $this->belongsToMany(\App\Models\Achievement::class);
     }
 
     public function coach()

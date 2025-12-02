@@ -33,14 +33,25 @@
             </div>
 
             <div class="form-group">
-                <label for="member_id">Anggota (opsional)</label>
-                <select name="member_id" id="member_id" class="form-control @error('member_id') is-invalid @enderror">
-                    <option value="">-- Pilih Anggota --</option>
-                    @foreach($members as $m)
-                        <option value="{{ $m->id }}" {{ old('member_id', $achievement->member_id) == $m->id ? 'selected' : '' }}>{{ $m->full_name }} ({{ $m->nisn }})</option>
-                    @endforeach
-                </select>
-                @error('member_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                <label>Anggota (opsional) - Pilih satu atau lebih</label>
+                <div style="background:#0a0a0a; border:2px solid #333; border-radius:8px; padding:1rem; max-height:350px; overflow-y:auto;">
+                    @if($members->count() > 0)
+                        @foreach($members as $m)
+                            <div style="margin-bottom:0.75rem; display:flex; align-items:center;">
+                                <input type="checkbox" name="members[]" id="member_{{ $m->id }}" value="{{ $m->id }}" 
+                                    {{ $achievement->members->contains($m->id) ? 'checked' : '' }}
+                                    style="width:18px; height:18px; cursor:pointer; accent-color:#DAA520;">
+                                <label for="member_{{ $m->id }}" style="margin-left:0.75rem; cursor:pointer; flex:1; color:#ccc;">
+                                    <strong>{{ $m->full_name }}</strong>
+                                    <span style="color:#999; font-size:0.9rem; margin-left:0.5rem;">({{ $m->nisn }})</span>
+                                </label>
+                            </div>
+                        @endforeach
+                    @else
+                        <div style="color:#666; text-align:center; padding:1rem;">Tidak ada data anggota</div>
+                    @endif
+                </div>
+                <small style="color:#999; margin-top:0.75rem; display:block;">Centang anggota yang mendapatkan prestasi ini</small>
             </div>
 
             <div class="form-group">

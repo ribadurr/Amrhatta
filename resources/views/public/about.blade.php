@@ -69,8 +69,14 @@
                 </div>
                 <!-- Member / Event info -->
                 <div style="margin-top:0.75rem; color:#cccccc; font-size:0.95rem;">
-                    <strong>Anggota:</strong>
-                    {{ optional($achievement->member)->full_name ?? '-' }}
+                    <strong>Anggota:</strong><br>
+                    @if($achievement->members->count() > 0)
+                        @foreach($achievement->members as $member)
+                            <div style="color:#DAA520; margin:0.25rem 0;">{{ $member->full_name }}</div>
+                        @endforeach
+                    @else
+                        <div style="color:#999;">-</div>
+                    @endif
                 </div>
                 @if($achievement->event)
                 <div style="color:#999; margin-top:0.25rem; font-size:0.9rem;">Event: {{ $achievement->event->title }}</div>

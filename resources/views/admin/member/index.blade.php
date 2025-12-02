@@ -78,35 +78,56 @@
 
         <!-- Pagination -->
         @if($members->hasPages())
-            <div class="pagination-wrapper" style="margin-top:1.5rem; text-align:center;">
-                <div style="color:#ccc; margin-bottom:.5rem;">Showing {{ $members->firstItem() }} to {{ $members->lastItem() }} of {{ $members->total() }} results</div>
+            <div class="pagination-wrapper" style="margin-top:1.5rem;">
+                <!-- <div style="color:#ccc; margin-bottom:.5rem; text-align:center;">Showing <strong>{{ $members->firstItem() }}</strong> to <strong>{{ $members->lastItem() }}</strong> of <strong>{{ $members->total() }}</strong> results</div> -->
 
-                <nav aria-label="Page navigation">
-                    <ul class="pagination" style="display:inline-flex; gap:.5rem; list-style:none; padding:0; margin:0; align-items:center;">
-                        {{-- Previous --}}
-                        @if($members->onFirstPage())
-                            <li class="page-item disabled"><span class="page-link" style="opacity:.5;">&laquo; Previous</span></li>
-                        @else
-                            <li class="page-item"><a class="page-link" href="{{ $members->previousPageUrl() }}">&laquo; Previous</a></li>
+                <div style="display:flex; justify-content:center; gap:0.5rem; flex-wrap:wrap; margin-top:0.5rem;">
+                    {{-- Previous --}}
+                    @if($members->onFirstPage())
+                        <span class="btn btn-secondary btn-sm" style="opacity:.6; cursor:default;">&laquo; Previous</span>
+                    @else
+                        <a href="{{ $members->previousPageUrl() }}" class="btn btn-secondary btn-sm">&laquo; Previous</a>
+                    @endif
+
+                    {{-- First page and ellipsis --}}
+                    @php
+                        $current = $members->currentPage();
+                        $last = $members->lastPage();
+                        $start = max(1, $current - 2);
+                        $end = min($last, $current + 2);
+                    @endphp
+
+                    @if($start > 1)
+                        <a href="{{ $members->url(1) }}" class="btn btn-secondary btn-sm">1</a>
+                        @if($start > 2)
+                            <span class="btn btn-secondary btn-sm" style="pointer-events:none; opacity:.6;">…</span>
                         @endif
+                    @endif
 
-                        {{-- Page Links --}}
-                        @foreach(range(1, $members->lastPage()) as $i)
-                            @if($i == $members->currentPage())
-                                <li class="page-item active"><span class="page-link" style="font-weight:600;">{{ $i }}</span></li>
-                            @else
-                                <li class="page-item"><a class="page-link" href="{{ $members->url($i) }}">{{ $i }}</a></li>
-                            @endif
-                        @endforeach
-
-                        {{-- Next --}}
-                        @if($members->hasMorePages())
-                            <li class="page-item"><a class="page-link" href="{{ $members->nextPageUrl() }}">Next &raquo;</a></li>
+                    {{-- Page range --}}
+                    @for($i = $start; $i <= $end; $i++)
+                        @if($i == $current)
+                            <span class="btn btn-primary btn-sm" aria-current="page">{{ $i }}</span>
                         @else
-                            <li class="page-item disabled"><span class="page-link" style="opacity:.5;">Next &raquo;</span></li>
+                            <a href="{{ $members->url($i) }}" class="btn btn-secondary btn-sm">{{ $i }}</a>
                         @endif
-                    </ul>
-                </nav>
+                    @endfor
+
+                    {{-- Last page and ellipsis --}}
+                    @if($end < $last)
+                        @if($end < $last - 1)
+                            <span class="btn btn-secondary btn-sm" style="pointer-events:none; opacity:.6;">…</span>
+                        @endif
+                        <a href="{{ $members->url($last) }}" class="btn btn-secondary btn-sm">{{ $last }}</a>
+                    @endif
+
+                    {{-- Next --}}
+                    @if($members->hasMorePages())
+                        <a href="{{ $members->nextPageUrl() }}" class="btn btn-secondary btn-sm">Next &raquo;</a>
+                    @else
+                        <span class="btn btn-secondary btn-sm" style="opacity:.6; cursor:default;">Next &raquo;</span>
+                    @endif
+                </div>
             </div>
         @endif
     @else

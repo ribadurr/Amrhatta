@@ -59,7 +59,6 @@ Ambalan Kami Dinamakan Moh Hatta-Rahmi Hatta karena waktu dulu sekolah SMKN 1 Ga
         // Ambil dari database
         $achievements = Achievement::orderBy('year', 'desc')->get();
         $coaches = Coach::all();
-
         return view('public.about', compact('about', 'achievements', 'coaches'));
     }
 
@@ -171,8 +170,8 @@ Ambalan Kami Dinamakan Moh Hatta-Rahmi Hatta karena waktu dulu sekolah SMKN 1 Ga
             ]
         ];
 
-        // Ambil data anggota dari database (urut berdasarkan nama lengkap)
-        $members = Member::orderBy('full_name')->get();
+        // Ambil data anggota dari database (urut berdasarkan nama lengkap), paginated
+        $members = Member::orderBy('full_name')->paginate(12)->withQueryString();
 
         // render the members view (keanggotaan)
         return view('public.members', compact('stats', 'organization', 'benefits', 'requirements', 'levels', 'members'));

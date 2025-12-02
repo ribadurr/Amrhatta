@@ -33,35 +33,79 @@
         </div>
     </section>
 
-    <!-- Daftar Anggota -->
+    <!-- Daftar Anggota (Card Grid) -->
     <section style="margin-top: 4rem;">
-        <h2 class="section-title">Data Anggota</h2>
-        <div style="background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%); border: 2px solid #DAA520; border-radius: 15px; overflow: hidden;">
-            <table style="width: 100%; border-collapse: collapse;">
-                <thead>
-                    <tr style="background: rgba(218, 165, 32, 0.2);">
-                        <th style="padding: 1rem; text-align: left; color: #DAA520; font-weight: 600; border-bottom: 2px solid #DAA520;">No</th>
-                        <th style="padding: 1rem; text-align: left; color: #DAA520; font-weight: 600; border-bottom: 2px solid #DAA520;">Nama</th>
-                        <th style="padding: 1rem; text-align: left; color: #DAA520; font-weight: 600; border-bottom: 2px solid #DAA520;">Kelas</th>
-                        <th style="padding: 1rem; text-align: left; color: #DAA520; font-weight: 600; border-bottom: 2px solid #DAA520;">Jabatan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($members as $key => $member)
-                    <tr style="border-bottom: 1px solid #333; transition: all 0.3s;">
-                        <td style="padding: 1rem; color: #cccccc;">{{ $key + 1 }}</td>
-                        <td style="padding: 1rem; color: #cccccc;">{{ $member->full_name ?? 'N/A' }}</td>
-                        <td style="padding: 1rem; color: #cccccc;">{{ $member->grade_class ?? 'N/A' }}</td>
-                        <td style="padding: 1rem; color: #cccccc;">{{ $member->position ?? 'N/A' }}</td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="4" style="padding: 2rem; text-align: center; color: #666;">Belum ada data anggota</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+        <h2 class="section-title">Anggota Kami</h2>
+
+        @if($members->count() > 0)
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1.25rem; margin-top:1rem;">
+                @foreach($members as $member)
+                    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%); border: 2px solid #333; border-radius: 12px; padding:1.25rem; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                        <div style="display:flex; align-items:center; gap:1rem;">
+                            <div style="width:64px; height:64px; background:#0b0b0b; border-radius:9999px; display:flex; align-items:center; justify-content:center; font-size:28px; color:#DAA520;">
+                                👤
+                            </div>
+                            <div style="flex:1;">
+                                <h4 style="margin:0; color:#fff; font-size:1rem;">{{ $member->full_name }}</h4>
+                                <div style="color:#999; font-size:0.9rem;">{{ $member->grade_class ?? '-' }}</div>
+                                <div style="margin-top:0.4rem;"><span class="badge badge-info">{{ $member->position ?? '-' }}</span></div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            {{-- Pagination for public members (styled) --}}
+            @if($members->hasPages())
+                <div style="margin-top:1.5rem; text-align:center;">
+                    <div style="color:#999; margin-bottom:.5rem;">Showing <strong>{{ $members->firstItem() }}</strong> to <strong>{{ $members->lastItem() }}</strong> of <strong>{{ $members->total() }}</strong> anggota</div>
+                    <div style="display:flex; justify-content:center; gap:.5rem; flex-wrap:wrap;">
+                        @if($members->onFirstPage())
+                            <span class="btn btn-secondary btn-sm" style="opacity:.6; cursor:default;">&laquo; Prev</span>
+                        @else
+                            <a href="{{ $members->previousPageUrl() }}" class="btn btn-secondary btn-sm">&laquo; Prev</a>
+                        @endif
+
+                        @php
+                            $cur = $members->currentPage();
+                            $last = $members->lastPage();
+                            $start = max(1, $cur - 1);
+                            $end = min($last, $cur + 1);
+                        @endphp
+
+                        @if($start > 1)
+                            <a href="{{ $members->url(1) }}" class="btn btn-secondary btn-sm">1</a>
+                            @if($start > 2)
+                                <span class="btn btn-secondary btn-sm" style="pointer-events:none; opacity:.6;">…</span>
+                            @endif
+                        @endif
+
+                        @for($i = $start; $i <= $end; $i++)
+                            @if($i == $cur)
+                                <span class="btn btn-primary btn-sm">{{ $i }}</span>
+                            @else
+                                <a href="{{ $members->url($i) }}" class="btn btn-secondary btn-sm">{{ $i }}</a>
+                            @endif
+                        @endfor
+
+                        @if($end < $last)
+                            @if($end < $last - 1)
+                                <span class="btn btn-secondary btn-sm" style="pointer-events:none; opacity:.6;">…</span>
+                            @endif
+                            <a href="{{ $members->url($last) }}" class="btn btn-secondary btn-sm">{{ $last }}</a>
+                        @endif
+
+                        @if($members->hasMorePages())
+                            <a href="{{ $members->nextPageUrl() }}" class="btn btn-secondary btn-sm">Next &raquo;</a>
+                        @else
+                            <span class="btn btn-secondary btn-sm" style="opacity:.6; cursor:default;">Next &raquo;</span>
+                        @endif
+                    </div>
+                </div>
+            @endif
+        @else
+            <div style="padding:2rem; text-align:center; color:#666;">Belum ada data anggota</div>
+        @endif
     </section>
 
     <!-- CTA -->

@@ -17,7 +17,7 @@ class MemberController extends Controller
      */
     public function index(): View
     {
-        $members = Member::orderBy('full_name', 'asc')->paginate(15)->withQueryString();
+        $members = Member::with('coach')->orderBy('full_name', 'asc')->paginate(15)->withQueryString();
         return view('admin.member.index', compact('members'));
     }
 

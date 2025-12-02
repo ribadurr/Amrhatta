@@ -28,6 +28,13 @@
                         <span class="badge badge-info" style="background: linear-gradient(135deg, #DAA520, #FFD700); color:#000; font-weight:600; padding: 0.4rem 0.75rem; border-radius: 20px; font-size: 0.85rem;">{{ $member->position ?? '-' }}</span>
                     </div>
                     
+                    <!-- Coach/Pembina -->
+                    @if($member->coach)
+                        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem;">
+                            <span class="badge badge-info" style="background: linear-gradient(135deg, #4a90e2, #357ae8); color:#fff; font-weight:600; padding: 0.4rem 0.75rem; border-radius: 20px; font-size: 0.85rem;">👨‍🏫 {{ $member->coach->name }}</span>
+                        </div>
+                    @endif
+                    
                     <!-- Divider -->
                     <div style="border-top: 1px solid rgba(218, 165, 32, 0.2); padding-top:1rem; margin-top:1rem;">
                         <div style="color:#999; font-size:0.9rem; display: flex; justify-content: space-between; align-items: center;">

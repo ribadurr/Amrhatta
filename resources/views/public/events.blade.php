@@ -33,6 +33,11 @@
                     <div class="detail-item">
                         <strong>⏱️ Durasi:</strong> {{ $event->duration }}
                     </div>
+                    @if($event->coach)
+                    <div class="detail-item">
+                        <strong>👨‍🏫 Pembina:</strong> {{ $event->coach->name }}
+                    </div>
+                    @endif
                 </div>
             
             </div>

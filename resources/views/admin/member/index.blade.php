@@ -34,6 +34,7 @@
                         <th>NISN</th>
                         <th>Kelas</th>
                         <th>Jabatan</th>
+                        <th>Pembina</th>
                         <th>Bergabung</th>
                         <th>Aksi</th>
                     </tr>
@@ -47,6 +48,13 @@
                             <td>{{ $member->grade_class }}</td>
                             <td>
                                 <span class="badge badge-info">{{ $member->position }}</span>
+                            </td>
+                            <td>
+                                @if($member->coach)
+                                    <span class="badge badge-success">{{ $member->coach->name }}</span>
+                                @else
+                                    <span style="color: #666;">-</span>
+                                @endif
                             </td>
                             <td>
                                 @if($member->join_date)

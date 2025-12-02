@@ -25,6 +25,7 @@
                     <th>Judul</th>
                     <th>Tanggal</th>
                     <th>Lokasi</th>
+                    <th>Pembina</th>
                     <th>Peserta</th>
                     <th>Durasi</th>
                     <th>Aksi</th>
@@ -37,6 +38,13 @@
                     <td>{{ $event->title }}</td>
                     <td>{{ \Carbon\Carbon::parse($event->date)->format('d M Y') }}</td>
                     <td>{{ $event->location }}</td>
+                    <td>
+                        @if($event->coach)
+                            <span class="badge badge-success">{{ $event->coach->name }}</span>
+                        @else
+                            <span style="color: #666;">-</span>
+                        @endif
+                    </td>
                     <td>{{ $event->participants }}</td>
                     <td>{{ $event->duration }}</td>
                     <td class="action-buttons">
@@ -54,7 +62,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="7" style="text-align: center; padding: 2rem;">
+                    <td colspan="8" style="text-align: center; padding: 2rem;">
                         Belum ada data event.
                     </td>
                 </tr>

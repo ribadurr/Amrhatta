@@ -41,14 +41,6 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     // Member import/export
     Route::get('member-export', [MemberController::class, 'export'])->name('member.export');
     Route::post('member-import', [MemberController::class, 'import'])->name('member.import');
-    
-    // Agenda routes (yang sudah ada)
-    Route::get('/agenda', [AdminController::class, 'agendaIndex'])->name('agenda.index');
-    Route::get('/agenda/create', [AdminController::class, 'agendaCreate'])->name('agenda.create');
-    Route::post('/agenda', [AdminController::class, 'agendaStore'])->name('agenda.store');
-    Route::get('/agenda/{agenda}/edit', [AdminController::class, 'agendaEdit'])->name('agenda.edit');
-    Route::put('/agenda/{agenda}', [AdminController::class, 'agendaUpdate'])->name('agenda.update');
-    Route::delete('/agenda/{agenda}', [AdminController::class, 'agendaDestroy'])->name('agenda.destroy');
 });
 
 require __DIR__.'/auth.php';

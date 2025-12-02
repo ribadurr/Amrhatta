@@ -37,14 +37,6 @@
                 👤 Anggota
             </a>
             
-            <div class="nav-divider">
-                <span>LAINNYA</span>
-            </div>
-            
-            <a href="{{ route('admin.agenda.index') }}" class="{{ request()->routeIs('admin.agenda.*') ? 'active' : '' }}">
-                📋 Jadwal
-            </a>
-            
             <div class="sidebar-divider"></div>
             
             <a href="{{ route('public.home') }}" target="_blank" class="nav-external">

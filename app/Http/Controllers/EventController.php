@@ -10,7 +10,7 @@ class EventController extends Controller
     // Display a listing of events
     public function index()
     {
-        $events = Event::latest()->paginate(10);
+        $events = Event::with('coach')->latest()->paginate(10);
         return view('admin.events.index', compact('events'));
     }
 

@@ -1,0 +1,676 @@
+/* ===========================
+   ADVANCED ANIMATIONS & INTERACTIONS
+   =========================== */
+
+/* Loading Animation */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes wobble {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-2deg);
+    }
+    75% {
+        transform: rotate(2deg);
+    }
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(218, 165, 32, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(218, 165, 32, 0.8);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes borderGlow {
+    0%, 100% {
+        border-color: #DAA520;
+        box-shadow: 0 0 10px rgba(218, 165, 32, 0.3);
+    }
+    50% {
+        border-color: #FFD700;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+}
+
+/* ===========================
+   APPLY ANIMATIONS TO ELEMENTS
+   =========================== */
+
+/* Sidebar Animations */
+.sidebar {
+    animation: slideInLeft 0.5s ease-out;
+}
+
+.sidebar-nav a,
+.sidebar-nav button {
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-nav a::before,
+.sidebar-nav button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(218, 165, 32, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.sidebar-nav a:hover::before,
+.sidebar-nav button:hover::before {
+    left: 100%;
+}
+
+.sidebar-header .logo {
+    animation: scaleIn 0.6s ease-out;
+}
+
+/* Topbar Animations */
+.topbar {
+    animation: slideInDown 0.5s ease-out;
+}
+
+.user-info {
+    animation: fadeIn 0.8s ease-out 0.3s both;
+}
+
+/* Card Animations */
+.event-card,
+.member-card,
+.stat-card,
+.level-card,
+.benefit-item {
+    animation: slideInUp 0.6s ease-out;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.event-card:nth-child(1) { animation-delay: 0.1s; }
+.event-card:nth-child(2) { animation-delay: 0.2s; }
+.event-card:nth-child(3) { animation-delay: 0.3s; }
+.event-card:nth-child(4) { animation-delay: 0.4s; }
+.event-card:nth-child(n+5) { animation-delay: 0.5s; }
+
+.member-card:nth-child(1) { animation-delay: 0.1s; }
+.member-card:nth-child(2) { animation-delay: 0.2s; }
+.member-card:nth-child(3) { animation-delay: 0.3s; }
+.member-card:nth-child(4) { animation-delay: 0.4s; }
+.member-card:nth-child(n+5) { animation-delay: 0.5s; }
+
+/* Button Animations */
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn:hover {
+    letter-spacing: 0.5px;
+}
+
+.btn-primary:hover {
+    animation: glow 1s ease-in-out infinite;
+}
+
+/* Table Row Animations */
+.admin-table tbody tr {
+    animation: fadeIn 0.4s ease-out;
+    position: relative;
+}
+
+.admin-table tbody tr:hover {
+    animation: pulse 1s ease-in-out;
+}
+
+.admin-table tbody tr::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #DAA520, transparent);
+    transition: width 0.3s;
+}
+
+.admin-table tbody tr:hover::after {
+    width: 100%;
+}
+
+/* Form Input Animations */
+.form-control {
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-control::placeholder {
+    transition: color 0.3s;
+}
+
+.form-control:focus {
+    animation: borderGlow 2s ease-in-out infinite;
+}
+
+.form-control:focus::placeholder {
+    color: transparent;
+}
+
+.form-group {
+    animation: slideInLeft 0.5s ease-out;
+}
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.2s; }
+.form-group:nth-child(3) { animation-delay: 0.3s; }
+.form-group:nth-child(4) { animation-delay: 0.4s; }
+.form-group:nth-child(n+5) { animation-delay: 0.5s; }
+
+/* Badge Animations */
+.badge {
+    animation: scaleIn 0.4s ease-out;
+    transition: all 0.3s;
+}
+
+.badge:hover {
+    transform: scale(1.1);
+    animation: glow 1s ease-in-out infinite;
+}
+
+/* Alert Animations */
+.alert {
+    animation: slideInDown 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Hero Section Animations */
+.hero h1 {
+    animation: slideInUp 0.7s ease-out;
+}
+
+.hero p {
+    animation: slideInUp 0.7s ease-out 0.2s both;
+}
+
+.cta-button {
+    animation: slideInUp 0.7s ease-out 0.4s both;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: left 0.5s;
+}
+
+.cta-button:hover::after {
+    left: 100%;
+}
+
+/* Section Title Animations */
+.section-title {
+    animation: slideInDown 0.6s ease-out;
+}
+
+.section-title::after {
+    animation: slideInDown 0.8s ease-out 0.2s both;
+    transform-origin: left;
+}
+
+/* Loading Spinner */
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(218, 165, 32, 0.3);
+    border-radius: 50%;
+    border-top-color: #DAA520;
+    animation: spin 1s linear infinite;
+}
+
+/* Tooltip Animations */
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem 1rem;
+    background: #DAA520;
+    color: #000;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 1000;
+}
+
+[data-tooltip]::before {
+    content: '';
+    position: absolute;
+    bottom: 115%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #DAA520;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1000;
+}
+
+[data-tooltip]:hover::after,
+[data-tooltip]:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+/* Image Hover Effects */
+img {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+img:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1) drop-shadow(0 0 15px rgba(218, 165, 32, 0.4));
+}
+
+/* Navbar Link Hover Animation */
+.nav-links a {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-links a::after {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ripple Effect on Click */
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(218, 165, 32, 0.5);
+    transform: scale(0);
+    animation: ripple 0.6s ease-out;
+    pointer-events: none;
+}
+
+/* Smooth Scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Focus Visible Styles */
+:focus-visible {
+    outline: 2px solid #DAA520;
+    outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px dashed #DAA520;
+    outline-offset: 4px;
+}
+
+/* ===========================
+   RESPONSIVE ANIMATIONS
+   =========================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .event-card,
+    .member-card,
+    .stat-card {
+        animation-delay: 0s !important;
+    }
+
+    .form-group {
+        animation-delay: 0s !important;
+    }
+
+    /* Slight reduction in animation complexity */
+    .btn::before {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Disable some animations on mobile for performance */
+    .sidebar-nav a::before,
+    .sidebar-nav button::before,
+    .btn::before,
+    .cta-button::after {
+        display: none;
+    }
+
+    /* Simpler animations */
+    .event-card:hover,
+    .member-card:hover,
+    .stat-card:hover,
+    .level-card:hover {
+        animation: none;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    /* Reduce glow animation on small screens */
+    .btn-primary:hover {
+        animation: none;
+    }
+
+    /* Maintain smooth interactions */
+    .form-control:focus {
+        animation: none;
+        box-shadow: 0 0 10px rgba(218, 165, 32, 0.3) !important;
+    }
+
+    /* Simplify table animations */
+    .admin-table tbody tr::after {
+        display: none;
+    }
+
+    .admin-table tbody tr:hover {
+        animation: none;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Disable complex animations */
+    .shimmer,
+    .gradient-shift,
+    .wobble,
+    .float {
+        animation: none;
+    }
+
+    /* Keep only essential animations */
+    .alert {
+        animation: slideInDown 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .btn {
+        animation: none;
+    }
+
+    /* Simple hover effects */
+    .card:hover {
+        transform: none;
+    }
+
+    /* Disable ripple on mobile */
+    .ripple {
+        display: none;
+    }
+
+    /* Smooth transitions only */
+    * {
+        transition-duration: 0.2s;
+    }
+}
+
+/* ===========================
+   ACCESSIBILITY & PERFORMANCE
+   =========================== */
+
+/* Optimize animations for mobile */
+@media (hover: none) and (pointer: coarse) {
+    /* Disable hover effects on touch devices */
+    .btn:hover,
+    .event-card:hover,
+    .member-card:hover,
+    [data-tooltip]:hover::after,
+    [data-tooltip]:hover::before {
+        animation: none;
+        transform: none;
+    }
+
+    /* Keep tap feedback */
+    .btn:active,
+    .event-card:active,
+    .member-card:active {
+        opacity: 0.9;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .glow {
+        box-shadow: 0 0 20px rgba(218, 165, 32, 0.8) !important;
+    }
+}
+
+/* ===========================
+   MICRO-INTERACTIONS
+   =========================== */
+
+/* Success Animation */
+@keyframes checkmark {
+    0% {
+        stroke-dashoffset: 100;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Error Shake */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.form-control.is-invalid:focus {
+    animation: shake 0.5s;
+}
+
+/* Page Transition */
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+body {
+    animation: pageEnter 0.5s ease-out;
+}
+
+/* ===========================
+   CUSTOM SCROLLBAR
+   =========================== */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #DAA520, #FFD700);
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #FFD700, #DAA520);
+    box-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
+}
+
+/* Firefox */
+* {
+    scrollbar-color: #DAA520 rgba(0, 0, 0, 0.5);
+    scrollbar-width: thin;
+}

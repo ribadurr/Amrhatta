@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') - Admin Pramuka SMKN 1 Garut</title>
-    @vite(['resources/css/admin.css'])
+    @vite(['resources/css/admin.css', 'resources/js/app.js'])
 </head>
 <body>
     <!-- Sidebar -->
@@ -41,10 +41,6 @@
             
             <a href="{{ route('public.home') }}" target="_blank" class="nav-external">
                 🌐 Lihat Website
-            </a>
-            
-            <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.*') ? 'active' : '' }}">
-                ⚙️ Pengaturan Profil
             </a>
             
             <form method="POST" action="{{ route('logout') }}" style="margin: 0;">

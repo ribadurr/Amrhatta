@@ -37,75 +37,55 @@
     <section style="margin-top: 4rem;">
         <h2 class="section-title">Anggota Kami</h2>
 
-        @if($members->count() > 0)
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1.25rem; margin-top:1rem;">
-                @foreach($members as $member)
-                    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%); border: 2px solid #333; border-radius: 12px; padding:1.25rem; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-                        <div style="display:flex; align-items:center; gap:1rem;">
-                            <div style="width:64px; height:64px; background:#0b0b0b; border-radius:9999px; display:flex; align-items:center; justify-content:center; font-size:28px; color:#DAA520;">
-                                👤
-                            </div>
-                            <div style="flex:1;">
-                                <h4 style="margin:0; color:#fff; font-size:1rem;">{{ $member->full_name }}</h4>
-                                <div style="color:#999; font-size:0.9rem;">{{ $member->grade_class ?? '-' }}</div>
-                                <div style="margin-top:0.4rem;"><span class="badge badge-info">{{ $member->position ?? '-' }}</span></div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
+        <div id="members-container">
+            @include('public.partials.members_list')
+        </div>
 
-            {{-- Pagination for public members (styled) --}}
-            @if($members->hasPages())
-                <div style="margin-top:1.5rem; text-align:center;">
-                    <div style="color:#999; margin-bottom:.5rem;">Showing <strong>{{ $members->firstItem() }}</strong> to <strong>{{ $members->lastItem() }}</strong> of <strong>{{ $members->total() }}</strong> anggota</div>
-                    <div style="display:flex; justify-content:center; gap:.5rem; flex-wrap:wrap;">
-                        @if($members->onFirstPage())
-                            <span class="btn btn-secondary btn-sm" style="opacity:.6; cursor:default;">&laquo; Prev</span>
-                        @else
-                            <a href="{{ $members->previousPageUrl() }}" class="btn btn-secondary btn-sm">&laquo; Prev</a>
-                        @endif
+        <script>
+            (function(){
+                // Delegate clicks on pagination links with class .ajax-page inside #members-container
+                const container = document.getElementById('members-container');
+                if (!container) return;
 
-                        @php
-                            $cur = $members->currentPage();
-                            $last = $members->lastPage();
-                            $start = max(1, $cur - 1);
-                            $end = min($last, $cur + 1);
-                        @endphp
+                container.addEventListener('click', function(e){
+                    const el = e.target.closest && e.target.closest('.ajax-page');
+                    if (!el) return;
+                    e.preventDefault();
+                    const url = el.getAttribute('href');
+                    if (!url) return;
 
-                        @if($start > 1)
-                            <a href="{{ $members->url(1) }}" class="btn btn-secondary btn-sm">1</a>
-                            @if($start > 2)
-                                <span class="btn btn-secondary btn-sm" style="pointer-events:none; opacity:.6;">…</span>
-                            @endif
-                        @endif
+                    // show simple loading state
+                    const oldOpacity = container.style.opacity;
+                    container.style.opacity = '0.6';
 
-                        @for($i = $start; $i <= $end; $i++)
-                            @if($i == $cur)
-                                <span class="btn btn-primary btn-sm">{{ $i }}</span>
-                            @else
-                                <a href="{{ $members->url($i) }}" class="btn btn-secondary btn-sm">{{ $i }}</a>
-                            @endif
-                        @endfor
+                    fetch(url, {
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    }).then(function(resp){
+                        if (!resp.ok) throw new Error('Network error');
+                        return resp.text();
+                    }).then(function(html){
+                        container.innerHTML = html;
+                        // update URL without reload
+                        window.history.pushState({}, '', url);
+                        container.style.opacity = oldOpacity || '';
+                        // scroll to members section
+                        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }).catch(function(){
+                        container.style.opacity = oldOpacity || '';
+                    });
+                });
 
-                        @if($end < $last)
-                            @if($end < $last - 1)
-                                <span class="btn btn-secondary btn-sm" style="pointer-events:none; opacity:.6;">…</span>
-                            @endif
-                            <a href="{{ $members->url($last) }}" class="btn btn-secondary btn-sm">{{ $last }}</a>
-                        @endif
-
-                        @if($members->hasMorePages())
-                            <a href="{{ $members->nextPageUrl() }}" class="btn btn-secondary btn-sm">Next &raquo;</a>
-                        @else
-                            <span class="btn btn-secondary btn-sm" style="opacity:.6; cursor:default;">Next &raquo;</span>
-                        @endif
-                    </div>
-                </div>
-            @endif
-        @else
-            <div style="padding:2rem; text-align:center; color:#666;">Belum ada data anggota</div>
-        @endif
+                // handle back/forward navigation
+                window.addEventListener('popstate', function(){
+                    const url = window.location.href;
+                    // fetch current page into container
+                    fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                        .then(resp => resp.ok ? resp.text() : '')
+                        .then(html => { if(html) container.innerHTML = html; })
+                        .catch(()=>{});
+                });
+            })();
+        </script>
     </section>
 
     <!-- CTA -->

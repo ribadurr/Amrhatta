@@ -62,7 +62,7 @@ Ambalan Kami Dinamakan Moh Hatta-Rahmi Hatta karena waktu dulu sekolah SMKN 1 Ga
         return view('public.about', compact('about', 'achievements', 'coaches'));
     }
 
-    public function membership()
+    public function membership(Request $request)
     {
         $years = date('Y') - config('site.founded_year', 1984);
 
@@ -173,13 +173,18 @@ Ambalan Kami Dinamakan Moh Hatta-Rahmi Hatta karena waktu dulu sekolah SMKN 1 Ga
         // Ambil data anggota dari database (urut berdasarkan nama lengkap), paginated
         $members = Member::orderBy('full_name')->paginate(12)->withQueryString();
 
+        // If this is an AJAX request, return only the members partial (HTML fragment)
+        if ($request->ajax()) {
+            return view('public.partials.members_list', compact('members'));
+        }
+
         // render the members view (keanggotaan)
         return view('public.members', compact('stats', 'organization', 'benefits', 'requirements', 'levels', 'members'));
     }
 
-    public function members()
+    public function members(Request $request)
     {
-        // reuse membership data and view
-        return $this->membership();
+        // reuse membership data and view, forward request for AJAX detection
+        return $this->membership($request);
     }
 }

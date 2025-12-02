@@ -39,7 +39,7 @@
                         @foreach($members as $m)
                             <div style="margin-bottom:0.75rem; display:flex; align-items:center;">
                                 <input type="checkbox" name="members[]" id="member_{{ $m->id }}" value="{{ $m->id }}" 
-                                    {{ $achievement->members->contains($m->id) ? 'checked' : '' }}
+                                    {{ in_array($m->id, $selectedMembers ?? []) ? 'checked' : '' }}
                                     style="width:18px; height:18px; cursor:pointer; accent-color:#DAA520;">
                                 <label for="member_{{ $m->id }}" style="margin-left:0.75rem; cursor:pointer; flex:1; color:#ccc;">
                                     <strong>{{ $m->full_name }}</strong>

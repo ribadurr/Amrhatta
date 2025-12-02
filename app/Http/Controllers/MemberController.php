@@ -177,13 +177,20 @@ class MemberController extends Controller
             'position' => 'required|string|max:255',
             'join_date' => 'nullable|date',
             'coach_id' => 'nullable|exists:coaches,id',
+            'photo' => 'nullable|image|max:2048',
         ], [
             'full_name.required' => 'Nama lengkap harus diisi',
             'nisn.required' => 'NISN harus diisi',
             'nisn.unique' => 'NISN sudah terdaftar',
             'grade_class.required' => 'Kelas harus diisi',
             'position.required' => 'Jabatan harus diisi',
+            'photo.image' => 'File harus berupa gambar',
+            'photo.max' => 'Ukuran foto maksimal 2MB',
         ]);
+
+        if ($request->hasFile('photo')) {
+            $validated['photo'] = $request->file('photo')->store('members', 'public');
+        }
 
         Member::create($validated);
 
@@ -212,13 +219,24 @@ class MemberController extends Controller
             'position' => 'required|string|max:255',
             'join_date' => 'nullable|date',
             'coach_id' => 'nullable|exists:coaches,id',
+            'photo' => 'nullable|image|max:2048',
         ], [
             'full_name.required' => 'Nama lengkap harus diisi',
             'nisn.required' => 'NISN harus diisi',
             'nisn.unique' => 'NISN sudah terdaftar',
             'grade_class.required' => 'Kelas harus diisi',
             'position.required' => 'Jabatan harus diisi',
+            'photo.image' => 'File harus berupa gambar',
+            'photo.max' => 'Ukuran foto maksimal 2MB',
         ]);
+
+        if ($request->hasFile('photo')) {
+            // Delete old photo if exists
+            if ($member->photo && \Illuminate\Support\Facades\Storage::disk('public')->exists($member->photo)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($member->photo);
+            }
+            $validated['photo'] = $request->file('photo')->store('members', 'public');
+        }
 
         $member->update($validated);
 

@@ -7,7 +7,7 @@
     <h1 style="color: #DAA520; margin-bottom: 2rem;">👥 Tambah Anggota Baru</h1>
 
     <div class="form-container">
-        <form action="{{ route('admin.member.store') }}" method="POST">
+        <form action="{{ route('admin.member.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <!-- Nama Lengkap -->
@@ -81,6 +81,18 @@
                     @endforeach
                 </select>
                 @error('coach_id')<span class="invalid-feedback">{{ $message }}</span>@enderror
+            </div>
+
+            <!-- Foto Anggota -->
+            <div class="form-group">
+                <label for="photo">Foto Anggota (Opsional)</label>
+                <input type="file" id="photo" name="photo" 
+                       class="form-control @error('photo') is-invalid @enderror"
+                       accept="image/*">
+                <small style="color: #999;">Max 2MB. Format: JPG, PNG, GIF, etc.</small>
+                @error('photo')
+                    <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
             </div>
 
             <!-- Buttons -->

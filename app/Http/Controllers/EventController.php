@@ -65,7 +65,7 @@ class EventController extends Controller
     {
         $coaches = \App\Models\Coach::orderBy('name')->get();
         $members = \App\Models\Member::orderBy('full_name')->get();
-        $selected = $event->members()->pluck('id')->toArray();
+        $selected = $event->members()->pluck('members.id')->toArray();
         return view('admin.events.edit', compact('event', 'coaches', 'members', 'selected'));
     }
 

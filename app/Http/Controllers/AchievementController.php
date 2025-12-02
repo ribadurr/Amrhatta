@@ -65,7 +65,8 @@ class AchievementController extends Controller
     {
         $members = Member::orderBy('full_name')->get();
         $events = Event::orderBy('date', 'desc')->get();
-        return view('admin.achievements.edit', compact('achievement', 'members', 'events'));
+        $selectedMembers = $achievement->members()->pluck('members.id')->toArray();
+        return view('admin.achievements.edit', compact('achievement', 'members', 'events', 'selectedMembers'));
     }
 
     public function update(Request $request, Achievement $achievement)

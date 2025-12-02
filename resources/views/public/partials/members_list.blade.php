@@ -13,8 +13,12 @@
                 
                 <div style="position: relative; z-index: 1;">
                     <!-- Avatar -->
-                    <div style="width:80px; height:80px; background: linear-gradient(135deg, #DAA520 0%, #FFD700 100%); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:40px; margin-bottom:1.25rem; box-shadow: 0 6px 20px rgba(218, 165, 32, 0.35);">
-                        👤
+                    <div style="width:80px; height:80px; background: linear-gradient(135deg, #DAA520 0%, #FFD700 100%); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:40px; margin-bottom:1.25rem; box-shadow: 0 6px 20px rgba(218, 165, 32, 0.35); overflow:hidden;">
+                        @if($member->photo)
+                            <img src="{{ asset('storage/'.$member->photo) }}" alt="{{ $member->full_name }}" style="width:100%; height:100%; object-fit:cover;">
+                        @else
+                            👤
+                        @endif
                     </div>
                     
                     <!-- Name -->

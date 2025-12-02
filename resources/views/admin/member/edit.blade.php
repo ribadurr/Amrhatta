@@ -7,7 +7,7 @@
     <h1 style="color: #DAA520; margin-bottom: 2rem;">👥 Edit Anggota</h1>
 
     <div class="form-container">
-        <form action="{{ route('admin.member.update', $member) }}" method="POST">
+        <form action="{{ route('admin.member.update', $member) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -82,6 +82,27 @@
                     @endforeach
                 </select>
                 @error('coach_id')<span class="invalid-feedback">{{ $message }}</span>@enderror
+            </div>
+
+            <!-- Foto Anggota -->
+            @if(!empty($member->photo))
+            <div class="form-group">
+                <label>Foto Saat Ini:</label>
+                <div style="margin-bottom: 1rem; border-radius: 8px; overflow: hidden; max-width: 200px;">
+                    <img src="{{ asset('storage/'.$member->photo) }}" alt="{{ $member->full_name }}" style="width: 100%; height: auto; object-fit: cover;">
+                </div>
+            </div>
+            @endif
+
+            <div class="form-group">
+                <label for="photo">Ubah Foto Anggota (Opsional)</label>
+                <input type="file" id="photo" name="photo" 
+                       class="form-control @error('photo') is-invalid @enderror"
+                       accept="image/*">
+                <small style="color: #999;">Max 2MB. Kosongkan jika tidak ingin mengubah foto.</small>
+                @error('photo')
+                    <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
             </div>
 
             <!-- Buttons -->

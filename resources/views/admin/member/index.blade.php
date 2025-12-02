@@ -29,6 +29,7 @@
             <table class="admin-table">
                 <thead>
                     <tr>
+                        <th>Foto</th>
                         <th>No</th>
                         <th>Nama Lengkap</th>
                         <th>NISN</th>
@@ -42,6 +43,16 @@
                 <tbody>
                     @foreach($members as $member)
                         <tr>
+                            <td style="text-align:center;">
+                                @if($member->photo)
+                                    <img src="{{ asset('storage/'.$member->photo) }}" alt="{{ $member->full_name }}" 
+                                         style="width:45px; height:45px; border-radius:50%; object-fit:cover;">
+                                @else
+                                    <div style="width:45px; height:45px; border-radius:50%; background:#444; display:flex; align-items:center; justify-content:center; color:#999; font-size:20px; margin:0 auto;">
+                                        👤
+                                    </div>
+                                @endif
+                            </td>
                             <td>{{ $members->firstItem() + $loop->index }}</td>
                             <td>{{ $member->full_name }}</td>
                             <td>{{ $member->nisn }}</td>

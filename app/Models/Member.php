@@ -16,6 +16,7 @@ class Member extends Model
         'position',
         'join_date',
         'coach_id',
+        'photo',
     ];
 
     protected $casts = [

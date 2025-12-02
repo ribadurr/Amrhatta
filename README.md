@@ -109,69 +109,49 @@ php artisan serve
 
 ## 📊 USE CASE DIAGRAM
 
-### Diagram Alur Sistem
+### 🎯 Diagram Visual
 
-```
-                        SISTEM PRAMUKA SMKN 1 GARUT
-                                  │
-                    ┌─────────────────────────────┐
-                    │                             │
-                    ▼                             ▼
-            ┌───────────────┐           ┌──────────────────┐
-            │   ADMIN SIDE  │           │   PUBLIC SIDE    │
-            └───────────────┘           └──────────────────┘
-                    │                             │
-        ┌───────────┼───────────┐        ┌────────┼────────┐
-        │           │           │        │        │        │
-        ▼           ▼           ▼        ▼        ▼        ▼
-    ┌────────┐ ┌────────┐ ┌────────┐ ┌─────┐ ┌──────┐ ┌────────┐
-    │ Member │ │ Event  │ │Coach   │ │View │ │Browse│ │ About  │
-    │ CRUD   │ │ CRUD   │ │ CRUD   │ │Home │ │Event │ │ Info   │
-    └────────┘ └────────┘ └────────┘ │     │ │ List │ │ Page   │
-        │           │           │        │     │      │ │        │
-        ▼           ▼           ▼        └─────┘ └──────┘ └────────┘
-    ┌────────┐ ┌────────┐ ┌────────┐        │
-    │Achievement│ Upload │ Import/ │        └────────┐
-    │ CRUD    │ Photos │ Export  │                 │
-    └────────┘ └────────┘ └────────┘        ┌──────▼────────┐
-                │           │                │   Browse      │
-                │           │                │   Members     │
-                └─────┬─────┘                └───────────────┘
-                      │
-                      ▼
-            ┌──────────────────────┐
-            │   Manage Relations   │
-            │   • Event→Member     │
-            │   • Achievement→Mbr  │
-            │   • Coach→Member     │
-            │   • Coach→Event      │
-            └──────────────────────┘
-```
+![USE CASE DIAGRAM](./public/images/Usecase%20UKK.png)
 
-### Use Cases Detail
+**Deskripsi Diagram:**
+- **Admin Side**: Mengelola Member, Event, Coach, dan Achievement dengan fitur CRUD lengkap
+- **Public Side**: Pengunjung dapat melihat daftar event, member, dan informasi tentang organisasi
+- **Relasi**: Semua entitas saling terhubung melalui relationship yang kompleks (1:N dan N:N)
 
-| No | Use Case | Actor | Deskripsi |
-|----|----------|-------|----------|
-| 1 | **Create Member** | Admin | Tambah anggota baru dengan foto, NISN, kelas, pembina |
-| 2 | **View Members** | Admin | Lihat daftar semua anggota dengan foto & detail |
-| 3 | **Update Member** | Admin | Edit data anggota (nama, kelas, jabatan, foto) |
-| 4 | **Delete Member** | Admin | Hapus anggota dari sistem |
-| 5 | **Export Members** | Admin | Download data anggota ke file CSV |
-| 6 | **Import Members** | Admin | Upload daftar anggota dari file CSV (batch) |
-| 7 | **Create Event** | Admin | Buat kegiatan baru (judul, tanggal, lokasi, durasi, foto) |
-| 8 | **Edit Event** | Admin | Ubah detail event & assign peserta |
-| 9 | **Delete Event** | Admin | Hapus event dari sistem |
-| 10 | **Assign Members to Event** | Admin | Pilih anggota yang ikut event (N:N) |
-| 11 | **Assign Coach to Event** | Admin | Tentukan pembina yang mendampingi |
-| 12 | **Create Achievement** | Admin | Buat prestasi baru (tahun, judul, kategori) |
-| 13 | **Link Achievement Members** | Admin | Hubungkan prestasi ke anggota (N:N) |
-| 14 | **Link Achievement Event** | Admin | Hubungkan prestasi ke event (1:N) |
-| 15 | **Manage Coaches** | Admin | CRUD pembina + upload foto profil |
-| 16 | **Admin Login** | Admin | Login dengan email & password |
-| 17 | **Admin Logout** | Admin | Keluar dari sistem |
-| 18 | **Browse Members** | Public | Lihat daftar anggota dengan foto & pembina (paginated) |
-| 19 | **Browse Events** | Public | Lihat daftar event dengan detail & pembina |
-| 20 | **View About Info** | Public | Baca sejarah, visi, misi, prestasi, profil pembina |
+### 🎯 Use Cases Detail
+
+#### **👨‍💼 ADMIN FUNCTIONS (18 Use Cases)**
+
+| ID | Use Case | Deskripsi |
+|----|----------|-----------|
+| **UC-A1** | **Login/Logout** | Admin login dengan email & password, logout dari sistem |
+| **UC-A2** | **View Dashboard** | Melihat statistik real-time (total member, event, coach, achievement) |
+| **UC-A3** | **Create Member** | Tambah anggota baru: nama, NISN, kelas, posisi, coach, foto |
+| **UC-A4** | **Read Members** | Lihat daftar semua anggota dengan filter & pagination |
+| **UC-A5** | **Update Member** | Edit data anggota (profil, kelas, posisi, foto, coach) |
+| **UC-A6** | **Delete Member** | Hapus anggota dari sistem (soft/hard delete) |
+| **UC-A7** | **Import Members** | Bulk upload anggota dari file CSV/XLSX |
+| **UC-A8** | **Export Members** | Download daftar anggota ke CSV/XLSX |
+| **UC-A9** | **Create Event** | Buat event baru: judul, deskripsi, tanggal, lokasi, durasi, foto |
+| **UC-A10** | **Read Events** | Lihat daftar semua event dengan detail |
+| **UC-A11** | **Update Event** | Edit data event & assign members (many-to-many) |
+| **UC-A12** | **Delete Event** | Hapus event dari sistem |
+| **UC-A13** | **Assign Coach to Event** | Tentukan pembina pendamping untuk setiap event |
+| **UC-A14** | **Create Coach** | Tambah pembina baru: nama, posisi, NIP, biodata, foto |
+| **UC-A15** | **Read Coaches** | Lihat daftar semua pembina dengan detail |
+| **UC-A16** | **Update Coach** | Edit profil pembina (nama, posisi, biodata, foto) |
+| **UC-A17** | **Delete Coach** | Hapus pembina dari sistem |
+| **UC-A18** | **Manage Achievements** | CRUD prestasi: judul, tahun, kategori, assign members & event |
+
+#### **👥 PUBLIC FUNCTIONS (5 Use Cases)**
+
+| ID | Use Case | Deskripsi |
+|----|----------|-----------|
+| **UC-P1** | **View Home** | Lihat halaman beranda dengan statistik, event terbaru, info singkat |
+| **UC-P2** | **Browse Events** | Lihat daftar event publik dengan detail & pembina pendamping |
+| **UC-P3** | **Browse Members** | Lihat daftar anggota dengan foto, pembina, pagination |
+| **UC-P4** | **View About Info** | Baca sejarah, visi/misi, daftar lengkap prestasi & profil pembina |
+| **UC-P5** | **View Member Detail** | Lihat detail anggota individual (foto, kelas, pembina, jabatan) |
 
 ---
 
@@ -179,7 +159,7 @@ php artisan serve
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│           PRAMUKA SMKN 1 GARUT - DATABASE SCHEMA               │
+│           PRAMUKA SMKN 1 GARUT - DATABASE SCHEMA                │
 └─────────────────────────────────────────────────────────────────┘
 
     ┌────────────────────────────┐

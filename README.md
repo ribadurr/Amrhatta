@@ -1,4 +1,4 @@
-# 🎯 Sistem Informasi & Administrasi Pramuka SMKN 1 Garut
+# 🎯 Pusat Informasi Pramuka SMKN 1 Garut
 
 Aplikasi web modern untuk mengelola informasi dan administrasi Ambalan Mohammad Hatta-Rahmi Hatta SMKN 1 Garut dengan dashboard admin yang intuitif dan halaman publik yang responsif.
 

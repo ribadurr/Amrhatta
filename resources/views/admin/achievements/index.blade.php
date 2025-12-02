@@ -23,6 +23,8 @@
                     <th>Tahun</th>
                     <th>Judul</th>
                     <th>Kategori</th>
+                    <th>Nama Siswa</th>
+                    <th>Event</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -33,6 +35,8 @@
                     <td>{{ $achievement->year }}</td>
                     <td>{{ $achievement->title }}</td>
                     <td>{{ $achievement->category }}</td>
+                    <td>{{ optional($achievement->member)->full_name ?? '-' }}</td>
+                    <td>{{ optional($achievement->event)->title ?? '-' }}</td>
                     <td class="action-buttons">
                         <a href="{{ route('admin.achievements.edit', $achievement) }}" class="btn btn-warning btn-sm">✏️ Edit</a>
                         <form action="{{ route('admin.achievements.destroy', $achievement) }}" method="POST" style="display:inline-block;">

@@ -50,6 +50,28 @@
             </div>
 
             <div class="form-group">
+                <label for="coach_id">Pembina Penanggung Jawab (opsional)</label>
+                <select name="coach_id" id="coach_id" class="form-control @error('coach_id') is-invalid @enderror">
+                    <option value="">-- Pilih Pembina --</option>
+                    @foreach($coaches as $c)
+                        <option value="{{ $c->id }}" {{ old('coach_id') == $c->id ? 'selected' : '' }}>{{ $c->name }}</option>
+                    @endforeach
+                </select>
+                @error('coach_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="members">Pilih Peserta (opsional)</label>
+                <select name="members[]" id="members" class="form-control @error('members') is-invalid @enderror" multiple size="6">
+                    @foreach($members as $m)
+                        <option value="{{ $m->id }}" {{ (collect(old('members'))->contains($m->id)) ? 'selected' : '' }}>{{ $m->full_name }} — {{ $m->nisn }}</option>
+                    @endforeach
+                </select>
+                <small style="color:#999;">Tahan Ctrl/Cmd untuk memilih banyak.</small>
+                @error('members')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
                 <label for="photo">Foto Kegiatan</label>
                 <input type="file" name="photo" id="photo" class="form-control @error('photo') is-invalid @enderror" accept="image/*">
                 <small style="color: #999;">Max 2MB. Format: JPG, PNG, GIF, etc.</small>

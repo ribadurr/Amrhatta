@@ -67,6 +67,14 @@
                 <div style="display: inline-block; background: rgba(218, 165, 32, 0.2); color: #DAA520; padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-top: 1rem;">
                     {{ $achievement->category }}
                 </div>
+                <!-- Member / Event info -->
+                <div style="margin-top:0.75rem; color:#cccccc; font-size:0.95rem;">
+                    <strong>Anggota:</strong>
+                    {{ optional($achievement->member)->full_name ?? '-' }}
+                </div>
+                @if($achievement->event)
+                <div style="color:#999; margin-top:0.25rem; font-size:0.9rem;">Event: {{ $achievement->event->title }}</div>
+                @endif
             </div>
             @endforeach
         </div>
@@ -90,10 +98,8 @@
                 @if($coach->bio)
                     <p style="color:#cccccc; font-size:0.92rem; margin:0 0 0.5rem;">{{ $coach->bio }}</p>
                 @endif
-                @if($coach->experience_years)
-                    <p class="coach-experience" style="color:#999; margin:0;">NIP: {{ $coach->experience_years }} tahun</p>
-                @elseif(!empty($coach->experience))
-                    <p class="coach-experience" style="color:#999; margin:0;">NIP: {{ $coach->experience }}</p>
+                @if(!empty($coach->nip))
+                    <p class="coach-experience" style="color:#999; margin:0;">NIP: {{ $coach->nip }}</p>
                 @endif
             </div>
             @endforeach

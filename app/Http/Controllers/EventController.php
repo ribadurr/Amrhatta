@@ -17,7 +17,9 @@ class EventController extends Controller
     // Show the form for creating a new event
     public function create()
     {
-        return view('admin.events.create');
+        $coaches = \App\Models\Coach::orderBy('name')->get();
+        $members = \App\Models\Member::orderBy('full_name')->get();
+        return view('admin.events.create', compact('coaches', 'members'));
     }
 
     // Store a newly created event in storage
@@ -30,7 +32,10 @@ class EventController extends Controller
             'location' => 'required',
             'photo' => 'nullable|image|max:2048',
             'participants' => 'required',
-            'duration' => 'required'
+            'duration' => 'required',
+            'coach_id' => 'nullable|exists:coaches,id',
+            'members' => 'nullable|array',
+            'members.*' => 'exists:members,id'
         ]);
 
         if ($request->hasFile('photo')) {
@@ -38,7 +43,12 @@ class EventController extends Controller
             $validated['photo'] = $path;
         }
 
-        Event::create($validated);
+        $event = Event::create($validated);
+
+        // attach selected members if any
+        if ($request->filled('members')) {
+            $event->members()->sync($request->input('members'));
+        }
 
         return redirect()->route('admin.events.index')
             ->with('success', 'Event berhasil ditambahkan!');
@@ -53,7 +63,10 @@ class EventController extends Controller
     // Show the form for editing the specified event
     public function edit(Event $event)
     {
-        return view('admin.events.edit', compact('event'));
+        $coaches = \App\Models\Coach::orderBy('name')->get();
+        $members = \App\Models\Member::orderBy('full_name')->get();
+        $selected = $event->members()->pluck('id')->toArray();
+        return view('admin.events.edit', compact('event', 'coaches', 'members', 'selected'));
     }
 
     // Update the specified event in storage
@@ -66,7 +79,10 @@ class EventController extends Controller
             'location' => 'required',
             'photo' => 'nullable|image|max:2048',
             'participants' => 'required',
-            'duration' => 'required'
+            'duration' => 'required',
+            'coach_id' => 'nullable|exists:coaches,id',
+            'members' => 'nullable|array',
+            'members.*' => 'exists:members,id'
         ]);
 
         if ($request->hasFile('photo')) {
@@ -75,6 +91,9 @@ class EventController extends Controller
         }
 
         $event->update($validated);
+
+        // sync participants
+        $event->members()->sync($request->input('members', []));
 
         return redirect()->route('admin.events.index')
             ->with('success', 'Event berhasil diupdate!');

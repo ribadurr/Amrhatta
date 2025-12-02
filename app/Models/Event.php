@@ -16,6 +16,17 @@ class Event extends Model
         'location',
         'photo',
         'participants',
+        'coach_id',
         'duration'
     ];
+
+    public function coach()
+    {
+        return $this->belongsTo(\App\Models\Coach::class);
+    }
+
+    public function members()
+    {
+        return $this->belongsToMany(\App\Models\Member::class, 'event_member')->withTimestamps()->withPivot('status');
+    }
 }

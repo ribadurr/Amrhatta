@@ -38,6 +38,9 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     
     // Member CRUD
     Route::resource('member', MemberController::class);
+    // Member import/export
+    Route::get('member-export', [MemberController::class, 'export'])->name('member.export');
+    Route::post('member-import', [MemberController::class, 'import'])->name('member.import');
     
     // Agenda routes (yang sudah ada)
     Route::get('/agenda', [AdminController::class, 'agendaIndex'])->name('agenda.index');

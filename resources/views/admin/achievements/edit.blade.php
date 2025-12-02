@@ -33,6 +33,28 @@
             </div>
 
             <div class="form-group">
+                <label for="member_id">Anggota (opsional)</label>
+                <select name="member_id" id="member_id" class="form-control @error('member_id') is-invalid @enderror">
+                    <option value="">-- Pilih Anggota --</option>
+                    @foreach($members as $m)
+                        <option value="{{ $m->id }}" {{ old('member_id', $achievement->member_id) == $m->id ? 'selected' : '' }}>{{ $m->full_name }} ({{ $m->nisn }})</option>
+                    @endforeach
+                </select>
+                @error('member_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
+                <label for="event_id">Event Terkait (opsional)</label>
+                <select name="event_id" id="event_id" class="form-control @error('event_id') is-invalid @enderror">
+                    <option value="">-- Pilih Event --</option>
+                    @foreach($events as $ev)
+                        <option value="{{ $ev->id }}" {{ old('event_id', $achievement->event_id) == $ev->id ? 'selected' : '' }}>{{ $ev->title }} — {{ $ev->date }}</option>
+                    @endforeach
+                </select>
+                @error('event_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+
+            <div class="form-group">
                 <label for="description">Deskripsi</label>
                 <textarea name="description" id="description" rows="4" class="form-control @error('description') is-invalid @enderror">{{ old('description', $achievement->description) }}</textarea>
                 @error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror

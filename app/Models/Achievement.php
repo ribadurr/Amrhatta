@@ -12,6 +12,20 @@ class Achievement extends Model
     protected $fillable = [
         'year',
         'title',
-        'category'
+        'category',
+        'description',
+        'image',
+        'member_id',
+        'event_id'
     ];
+
+    public function member()
+    {
+        return $this->belongsTo(\App\Models\Member::class);
+    }
+
+    public function event()
+    {
+        return $this->belongsTo(\App\Models\Event::class);
+    }
 }

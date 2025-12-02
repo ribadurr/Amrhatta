@@ -72,6 +72,17 @@
                        class="form-control">
             </div>
 
+            <div class="form-group">
+                <label for="coach_id">Pembina (opsional)</label>
+                <select id="coach_id" name="coach_id" class="form-control @error('coach_id') is-invalid @enderror">
+                    <option value="">-- Pilih Pembina --</option>
+                    @foreach($coaches as $c)
+                        <option value="{{ $c->id }}" {{ old('coach_id') == $c->id ? 'selected' : '' }}>{{ $c->name }}</option>
+                    @endforeach
+                </select>
+                @error('coach_id')<span class="invalid-feedback">{{ $message }}</span>@enderror
+            </div>
+
             <!-- Buttons -->
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">

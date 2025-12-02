@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Achievement;
+use App\Models\Member;
+use App\Models\Event;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class AchievementController extends Controller
@@ -15,7 +18,9 @@ class AchievementController extends Controller
 
     public function create()
     {
-        return view('admin.achievements.create');
+        $members = Member::orderBy('full_name')->get();
+        $events = Event::orderBy('date', 'desc')->get();
+        return view('admin.achievements.create', compact('members', 'events'));
     }
 
     public function store(Request $request)
@@ -23,8 +28,17 @@ class AchievementController extends Controller
         $validated = $request->validate([
             'year' => 'required',
             'title' => 'required|max:255',
-            'category' => 'required'
+            'category' => 'required',
+            'description' => 'nullable|string',
+            'member_id' => 'nullable|exists:members,id',
+            'event_id' => 'nullable|exists:events,id',
+            'image' => 'nullable|image|max:2048'
         ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('achievements', 'public');
+            $validated['image'] = $path;
+        }
 
         Achievement::create($validated);
 
@@ -39,7 +53,9 @@ class AchievementController extends Controller
 
     public function edit(Achievement $achievement)
     {
-        return view('admin.achievements.edit', compact('achievement'));
+        $members = Member::orderBy('full_name')->get();
+        $events = Event::orderBy('date', 'desc')->get();
+        return view('admin.achievements.edit', compact('achievement', 'members', 'events'));
     }
 
     public function update(Request $request, Achievement $achievement)
@@ -47,8 +63,17 @@ class AchievementController extends Controller
         $validated = $request->validate([
             'year' => 'required',
             'title' => 'required|max:255',
-            'category' => 'required'
+            'category' => 'required',
+            'description' => 'nullable|string',
+            'member_id' => 'nullable|exists:members,id',
+            'event_id' => 'nullable|exists:events,id',
+            'image' => 'nullable|image|max:2048'
         ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('achievements', 'public');
+            $validated['image'] = $path;
+        }
 
         $achievement->update($validated);
 

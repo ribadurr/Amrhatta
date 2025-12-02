@@ -17,4 +17,14 @@ class Coach extends Model
         'bio',
         'photo'
     ];
+
+    public function members()
+    {
+        return $this->hasMany(\App\Models\Member::class);
+    }
+
+    public function events()
+    {
+        return $this->hasMany(\App\Models\Event::class);
+    }
 }

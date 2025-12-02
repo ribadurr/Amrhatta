@@ -15,9 +15,25 @@ class Member extends Model
         'grade_class',
         'position',
         'join_date',
+        'coach_id',
     ];
 
     protected $casts = [
         'join_date' => 'date',
     ];
+
+    public function achievements()
+    {
+        return $this->hasMany(\App\Models\Achievement::class);
+    }
+
+    public function coach()
+    {
+        return $this->belongsTo(\App\Models\Coach::class);
+    }
+
+    public function events()
+    {
+        return $this->belongsToMany(\App\Models\Event::class, 'event_member')->withTimestamps()->withPivot('status');
+    }
 }

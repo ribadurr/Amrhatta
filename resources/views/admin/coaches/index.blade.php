@@ -15,6 +15,7 @@
         <table class="admin-table">
             <thead>
                 <tr>
+                    <th>Foto</th>
                     <th>#</th>
                     <th>Nama</th>
                     <th>Jabatan</th>
@@ -25,6 +26,16 @@
             <tbody>
                 @forelse($coaches as $coach)
                 <tr>
+                    <td style="text-align:center;">
+                        @if($coach->photo)
+                            <img src="{{ asset('storage/'.$coach->photo) }}" alt="{{ $coach->name }}" 
+                                 style="width:45px; height:45px; border-radius:50%; object-fit:cover;">
+                        @else
+                            <div style="width:45px; height:45px; border-radius:50%; background:#444; display:flex; align-items:center; justify-content:center; color:#999; font-size:20px; margin:0 auto;">
+                                👨‍🏫
+                            </div>
+                        @endif
+                    </td>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $coach->name }}</td>
                     <td>{{ $coach->position }}</td>
@@ -39,7 +50,7 @@
                     </td>
                 </tr>
                 @empty
-                <tr><td colspan="5" style="text-align:center; padding:2rem;">Belum ada data pembina.</td></tr>
+                <tr><td colspan="6" style="text-align:center; padding:2rem;">Belum ada data pembina.</td></tr>
                 @endforelse
             </tbody>
         </table>
